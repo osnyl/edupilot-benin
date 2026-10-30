@@ -1,0 +1,41 @@
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from sqlalchemy import text
+
+from app.api.students import router as students_router
+from app.config import settings
+from app.database import engine
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Vérifie la connexion à la base au démarrage."""
+    async with engine.connect() as conn:
+        await conn.execute(text("SELECT 1"))
+    yield
+    await engine.dispose()
+
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version="0.1.0",
+    description="API d'EduPilot Bénin — SaaS scolaire multi-rôles",
+    lifespan=lifespan,
+)
+
+app.include_router(students_router)
+
+
+@app.get("/health", tags=["system"])
+async def health_check():
+    """Vérifie que l'API et la base sont opérationnelles."""
+    async with engine.connect() as conn:
+        result = await conn.execute(text("SELECT version();"))
+        pg_version = result.scalar()
+    return {
+        "status": "ok",
+        "app": settings.APP_NAME,
+        "env": settings.APP_ENV,
+        "database": pg_version,
+    }

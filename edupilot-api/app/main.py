@@ -3,7 +3,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlalchemy import text
 
+from app.api.assessments import router as assessments_router
+from app.api.classrooms import router as classrooms_router
+from app.api.schools import router as schools_router
 from app.api.students import router as students_router
+from app.api.subjects import router as subjects_router
+from app.api.users import router as users_router
 from app.config import settings
 from app.database import engine
 
@@ -25,6 +30,11 @@ app = FastAPI(
 )
 
 app.include_router(students_router)
+app.include_router(schools_router)
+app.include_router(users_router)
+app.include_router(classrooms_router)
+app.include_router(subjects_router)
+app.include_router(assessments_router)
 
 
 @app.get("/health", tags=["system"])

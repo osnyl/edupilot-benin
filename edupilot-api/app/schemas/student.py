@@ -17,8 +17,12 @@ class StudentBase(BaseModel):
 
 
 class StudentCreate(StudentBase):
-    """Payload pour POST /students (school_id sera déduit côté serveur plus tard)."""
-    pass
+    """Payload pour POST /students.
+    
+    Note : school_id est accepté ici temporairement (avant l'auth).
+    Il sera retiré quand l'authentification sera en place.
+    """
+    school_id: UUID
 
 
 class StudentRead(StudentBase):

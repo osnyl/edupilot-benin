@@ -19,3 +19,9 @@ Le dépôt public [`osnyl/-jarvis-v2`](https://github.com/osnyl/-jarvis-v2) cont
 4. Ajouter l’IA et la traduction avec validation humaine.
 
 Ce dépôt contient le cadrage ; il ne contient pas encore l’application complète.
+
+## Page d’accueil
+
+La page de présentation statique et son illustration sont dans [`landing-page/`](landing-page/), séparées de l’API et du squelette `edupilot-web/`. Pour la publier sans exposer le reste du dépôt, une branche `gh-pages` dédiée contiendra uniquement les fichiers de cette page. Dans **Settings → Pages**, choisir **Deploy from a branch**, puis `gh-pages` et `/(root)`.
+
+Le dépôt source reste privé. Le site GitHub Pages est public, sous réserve que le plan GitHub du propriétaire autorise une publication depuis un dépôt privé.
